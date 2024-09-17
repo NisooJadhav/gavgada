@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+  <!-- Home Page -->
+  <url>
+    <loc>https://www.gavgada.in/</loc>
+    <lastmod>2024-09-17T12:07:39+00:00</lastmod>
+    <priority>1.00</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <!-- Products Page -->
+  <url>
+    <loc>https://www.gavgada.in/</loc>
+    <lastmod>2024-09-17T12:07:39+00:00</lastmod>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://www.gavgada.in/about</loc>
+    <lastmod>2024-09-17T12:07:39+00:00</lastmod>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Services Page -->
+  <url>
+    <loc>https://www.gavgada.in/services</loc>
+    <lastmod>2024-09-17T12:07:39+00:00</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Contact Page -->
+  <url>
+    <loc>https://www.gavgada.in/contact</loc>
+    <lastmod>2024-09-17T12:07:39+00:00</lastmod>
+    <priority>0.70</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+</urlset>
