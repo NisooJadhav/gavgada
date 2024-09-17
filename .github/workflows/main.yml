@@ -19,7 +19,7 @@ jobs:
         node-version: '18'
 
     - name: Build
-      run: npm run build
+      run: npm i vite ; npm run build
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
