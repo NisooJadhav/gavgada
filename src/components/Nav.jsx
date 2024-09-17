@@ -23,7 +23,7 @@ const Nav = () => {
         <nav className="bg-green-800 p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center text-yellow-300 text-lg font-bold">
-                    <img src="/src/assets/logo.png" alt="Logo" className="h-[15vh] w-auto mr-3" />
+                    <img src="logo.png" alt="Logo" className="h-[15vh] w-auto mr-3" />
                     <NavLink to="/" className="text-2xl">माणुसकीचा गावगाडा</NavLink>
                 </div>
                 <div className="hidden md:flex space-x-4">
