@@ -2,7 +2,7 @@ import React from 'react'
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import { useLanguage } from '../LanguageContext';
 import fssai from "../assets/fssai.png";
-import madeInIndia from "../assets/madeinindia.png";
+import madeInIndia from "../assets/madeInIndia.png";
 
 const Footer = () => {
     const { language } = useLanguage();
