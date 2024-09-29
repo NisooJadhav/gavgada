@@ -1,83 +1,79 @@
-import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { MdGTranslate } from 'react-icons/md';
-import { useLanguage } from '../LanguageContext';
+import React, { useState } from "react";
+import { Globe, ShoppingCart } from "lucide-react";
+import { useLanguage } from "../LanguageContext";
+import { X } from "lucide-react";
 
 const Nav = () => {
-    const { language, toggleLanguage } = useLanguage();
-    const [isOpen, setIsOpen] = useState(false);
-    const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { language, toggleLanguage } = useLanguage();
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const navItems = [
-        { to: '/', label: { en: 'Products', mr: 'उत्पादने' } },
-        { to: '/about', label: { en: 'About', mr: 'आमच्याबद्दल' } },
-        { to: '/services', label: { en: 'Services', mr: 'सेवाएं' } },
-        { to: '/contact', label: { en: 'Contact', mr: 'संपर्क' } },
-    ];
-
-    return (
-        <nav className="bg-green-800 p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <div className="flex justify-center items-center text-yellow-300 text-lg font-bold">
-                    <img src="logo.png" alt="Logo" className="h-[15vh] w-auto mr-3" />
-                    <NavLink to="/" className="text-2xl">माणुसकीचा गावगाडा</NavLink>
-                </div>
-                <div className="hidden md:flex space-x-4">
-                    {navItems.map((item) => (
-                        <NavLink
-                            key={item.to}
-                            to={item.to}
-                            className={`${location.pathname === item.to ? 'text-yellow-300' : 'text-white opacity-60'}`}
-                        >
-                            {language === 'en' ? item.label.en : item.label.mr}
-                        </NavLink>
-                    ))}
-                    <button
-                        className="flex items-center text-white focus:outline-none"
-                        onClick={toggleLanguage}
-                    >
-                        <MdGTranslate className="w-6 h-6 mr-2" />
-                        {language === 'en' ? 'मराठी' : 'English'}
-                    </button>
-                </div>
-                <div className="md:hidden">
-                    <button onClick={toggleMenu} className="text-white focus:outline-none">
-                        ☰
-                    </button>
-                </div>
-            </div>
-            {isOpen && (
-                <div className="md:hidden">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        {navItems.map((item) => (
-                            <NavLink
-                                key={item.to}
-                                to={item.to}
-                                className={`block text-white ${location.pathname === item.to ? 'bg-yellow-500' : ''}`}
-                                onClick={toggleMenu}
-                            >
-                                {language === 'en' ? item.label.en : item.label.mr}
-                            </NavLink>
-                        ))}
-                        <button
-                            className="flex items-center text-white focus:outline-none"
-                            onClick={() => {
-                                toggleLanguage();
-                                toggleMenu();
-                            }}
-                        >
-                            <MdGTranslate className="w-6 h-6 mr-2" />
-                            {language === 'en' ? 'मराठी' : 'English'}
-                        </button>
-                    </div>
-                </div>
-            )}
-        </nav>
-    );
+  return (
+    <nav className="bg-orange-600 p-4 sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1
+          className={`text-2xl font-bold text-white ${
+            language === "mr" ? "font-[gajraj]" : ""
+          }`}
+        >
+          {language === "mr" ? "माणुसकीचा गावगाडा" : "Gavgada"}
+        </h1>
+        <div className="hidden md:flex items-center space-x-4">
+          <a href="#home" className="text-white hover:text-orange-200">
+            Home
+          </a>
+          <a href="#products" className="text-white hover:text-orange-200">
+            Products
+          </a>
+          <a href="#about" className="text-white hover:text-orange-200">
+            About
+          </a>
+          <a href="#contact" className="text-white hover:text-orange-200">
+            Contact
+          </a>
+          <button
+            className="text-white hover:text-orange-200"
+            onClick={() => {
+              toggleLanguage();
+            }}
+          >
+            <Globe size={20} />
+          </button>
+        </div>
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white"
+          >
+            {isMenuOpen ? <X size={24} /> : <ShoppingCart size={24} />}
+          </button>
+        </div>
+      </div>
+      {isMenuOpen && (
+        <div className="md:hidden mt-2">
+          <a href="#home" className="block text-white py-2">
+            Home
+          </a>
+          <a href="#products" className="block text-white py-2">
+            Products
+          </a>
+          <a href="#about" className="block text-white py-2">
+            About
+          </a>
+          <a href="#contact" className="block text-white py-2">
+            Contact
+          </a>
+          <button
+            className="text-white py-2"
+            onClick={() => {
+              toggleLanguage();
+            }}
+          >
+            <Globe size={20} />
+          </button>
+        </div>
+      )}
+    </nav>
+  );
 };
 
 export default Nav;
