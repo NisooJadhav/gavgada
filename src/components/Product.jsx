@@ -1,113 +1,187 @@
-import React, { useState } from 'react';
-import { useLanguage } from '../LanguageContext';
+import React, { useState } from "react";
+import { X } from "lucide-react";
+import { useLanguage } from "../LanguageContext";
+import chikki from "../assets/chikki.webp";
+import pedhaChikki from "../assets/pedha-chikki.webp";
 
-const Product = () => {
+const products = [
+    {
+        id: 1,
+        name_en: "Groundnut Chikki",
+        name_mr: "शेंगदाणा चिक्की",
+        price: 100,
+        image: chikki,
+        description_en: "Sweet, crunchy, and nutritious, Peanut Chikki is made from high-quality peanuts and natural jaggery. Perfect for snacks or special occasions. Order now!",
+        description_mr: "गोड, कुरकुरीत आणि पौष्टिक, शेंगदाणा चिक्की तुमच्या नाश्त्यासाठी उत्तम आहे! उच्च-गुणवत्तेचे शेंगदाणे आणि नैसर्गिक गूळ यांपासून बनलेली, ही मिठाई प्रत्येकाच्या मनाला भुरळ घालते. विशेष प्रसंगी किंवा रोजच्या चवदार नाश्त्यासाठी आजच ऑर्डर करा!"
+    },
+    {
+        id: 2,
+        name_en: "Pedha Chikki",
+        name_mr: "पेढा चिक्की",
+        price: 150,
+        image: pedhaChikki,
+        description_en: "A delightful fusion of pedha and chikki that melts in your mouth. Sweet and soft, made from high-quality ingredients, this treat is perfect for special occasions. Order now!",
+        description_mr: "पेढा आणि चिक्कीचा अनोखा संगम, जो तोंडात विरघळतो. गोड आणि मऊ, उच्च-गुणवत्तेच्या घटकांपासून बनलेला, ही मिठाई विशेष प्रसंगी किंवा चवदार नाश्त्यासाठी परफेक्ट आहे. आजच ऑर्डर करा!"
+    },
+];
+
+const ProductCard = ({ product, onBook }) => {
     const { language } = useLanguage();
     const [quantity, setQuantity] = useState(1);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [customerName, setCustomerName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [address, setAddress] = useState('');
 
-    const handleOrderNow = () => {
-        const message = `Customer Name: ${customerName}\nPhone Number: ${phoneNumber}\nAddress: ${address}\nProduct Name: Malai Pedha\nQuantity: ${quantity}`;
+    return (
+        <div className="bg-white p-6 rounded-lg shadow-md">
+            <img
+                src={product.image}
+                alt={product.name_en}
+                className="w-full h-48 object-cover mb-4 rounded"
+            />
+            <h3 className="text-xl font-semibold mb-2">{language === "mr" ? product.name_mr : product.name_en}</h3>
+            <p className="text-gray-600 mb-4">MRP: ₹{product.price} <span className="text-gray-400 line-through">{product.price + 50}</span></p>
+            <p className="text-gray-600 mb-4 text-sm">{language === "mr" ? product.description_mr : product.description_en}</p>
+            <div className="flex items-center mb-4">
+                <label htmlFor={`quantity-${product.id}`} className="mr-2">
+                    Quantity:
+                </label>
+                <input
+                    type="number"
+                    id={`quantity-${product.id}`}
+                    min="1"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value)))}
+                    className="border rounded px-2 py-1 w-16 text-center"
+                />
+            </div>
+            <button
+                aria-label="Book Now"
+                title="Book Now"
+                onClick={() => onBook(product, quantity)}
+                className="bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700 transition duration-300 w-full"
+            >
+                Book Now
+            </button>
+        </div>
+    );
+};
+
+const Modal = ({ isOpen, onClose, children }) => {
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
+                <button aria-label="Close" onClick={onClose} className="absolute top-2 right-2">
+                    <X size={24} />
+                </button>
+                {children}
+            </div>
+        </div>
+    );
+};
+
+const BookingForm = ({ product, quantity, onClose }) => {
+    const { language } = useLanguage();
+
+    const [formData, setFormData] = useState({
+        name: "",
+        mobile: "",
+        address: "",
+    });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const message = `Customer Name: ${formData.name}\nMobile: ${formData.mobile}\nAddress: ${formData.address}\nProduct: ${product.name_mr}\nQuantity: ${quantity}`;
         const phoneNumberToSend = '9922202033';
         const whatsappUrl = `https://wa.me/${phoneNumberToSend}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
-        setModalOpen(false);
+        onClose();
     };
 
     return (
-        <div className="max-w-[50vw] bg-white rounded-lg shadow-lg overflow-hidden flex mt-10 ml-[5vw] rounded-lg relative">
-            <img
-                src="https://www.giftwithluv.com/assets/upload/product_large/1985429960_product-500x500.jpeg"
-                alt="Product"
-                className="h-[50vh] w-auto object-fill mt-4"
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <h3 className="text-xl font-semibold mb-4">{language === "mr" ? "ऑर्डर बुक करा" : "Book Your Order"}</h3>
+            <p className="mb-4">
+                Product: {language === "mr" ? product.name_mr : product.name_en} <br />
+                Quantity: {quantity} <br />
+                Total: ₹{product.price * quantity}
+            </p>
+            <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                className="w-full p-2 border rounded"
+                required
             />
-            <div className="absolute top-4 right-4 text-blue-600 px-2 py-1 rounded animate-bounce">
-                {language === 'mr' ? "स्टॉक मध्ये" : 'In Stock'}
-            </div>
-            <div className="p-6 w-full border-l-2">
-                <h2 className="text-2xl font-bold text-green-800 mb-2">
-                    {language === 'mr' ? 'मलाई पेढा' : 'Malai Pedha'}
+            <input
+                type="tel"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                placeholder="Mobile Number"
+                className="w-full p-2 border rounded"
+                pattern="\d{10}"
+                required
+            />
+            <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="Delivery Address"
+                rows="3"
+                className="w-full p-2 border rounded"
+                required
+            ></textarea>
+            <button
+                aria-label="Confirm Order"
+                title="Confirm Order"
+                type="submit"
+                className="bg-orange-600 text-white py-2 px-6 rounded hover:bg-orange-700 transition duration-300 w-full"
+            >
+                Confirm Order
+            </button>
+        </form>
+    );
+};
+
+const Product = () => {
+    const { language } = useLanguage();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+    const handleBook = (product, quantity) => {
+        setSelectedProduct(product);
+        setSelectedQuantity(quantity);
+        setIsModalOpen(true);
+    };
+
+    return (
+        <div className="py-20 bg-orange-50" id="products">
+            <div className="container mx-auto px-4">
+                <h2 className={`text-3xl mb-8 ${language === "mr" ? "font-[yatra]" : ""} text-center`}>
+                    {language === "mr" ? 'आमची उत्पादने' : 'Our Products'}
                 </h2>
-                <p className="text-gray-700 mb-4">
-                    {language === 'mr'
-                        ? 'आमच्या उत्कृष्ट मलाई पेढ्यात सामील व्हा, जे उत्तम दूध आणि साखरेपासून तयार केलेले एक नाजूक गोड आहे, जे आनंददायी हिऱ्याच्या तुकड्यांमध्ये आकारलेले आहे. प्रत्येक तुकडा हाताने निवडलेल्या बदामांच्या साराने समृद्ध आहे आणि खाण्यायोग्य चांदीच्या पानांनी सजवलेले आहे, जे एक आलिशान उपचार प्रदान करते जे तुमच्या तोंडात विरघळते.'
-                        : 'Indulge in our exquisite Malai Pedha, a delicately crafted sweet made from the finest milk and sugar, shaped into delightful diamond slices. Each piece is enriched with the essence of handpicked almonds and adorned with a touch of edible silver leaf, offering a luxurious treat that melts in your mouth.'}
-                </p>
-                <div className="flex flex-col">
-                    <span className="text-lg">
-                        {language === 'mr' ? 'वजन: ' : 'Weight: '}
-                        <span className='font-semibold text-green-600 mr-2'>125 gm</span>
-                    </span>
-                    <span className="text-lg mt-4">
-                        {language === 'mr' ? 'किंमत:' : 'Price:'}
-                        <span className='font-semibold text-green-600 mr-2'>100₹</span>
-                        <span className='line-through text-red-600'>120₹</span>
-                    </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} onBook={handleBook} />
+                    ))}
                 </div>
-                <div className="flex items-center mb-4 mt-4 text-lg">
-                    {language === 'mr' ? 'प्रमाण भरा:' : 'Enter Quantity:'}
-                    <input
-                        type="number"
-                        value={quantity}
-                        onChange={(e) => setQuantity(e.target.value)}
-                        className="ml-2 border rounded px-2 py-1 w-16"
-                        min="1"
-                    />
-                </div>
-                <button
-                    onClick={() => setModalOpen(true)}
-                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200 mt-4"
-                >
-                    {language === 'mr' ? 'आता ऑर्डर करा' : 'Order Now'}
-                </button>
             </div>
-            {modalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded shadow-lg">
-                        <h3 className="text-lg font-bold mb-4">
-                            {language === 'mr' ? 'तुमची माहिती भरा' : 'Enter Your Details'}
-                        </h3>
-                        <input
-                            type="text"
-                            placeholder={language === 'mr' ? 'नाव' : 'Name'}
-                            value={customerName}
-                            onChange={(e) => setCustomerName(e.target.value)}
-                            className="border rounded px-2 py-1 mb-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            placeholder={language === 'mr' ? 'फोन नंबर' : 'Phone Number'}
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            className="border rounded px-2 py-1 mb-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            placeholder={language === 'mr' ? 'पत्ता' : 'Address'}
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            className="border rounded px-2 py-1 mb-4 w-full"
-                        />
-                        <button
-                            onClick={handleOrderNow}
-                            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200"
-                        >
-                            {language === 'mr' ? 'ऑर्डर बुक करा' : 'Book Order'}
-                        </button>
-                        <button
-                            onClick={() => setModalOpen(false)}
-                            className="ml-4 text-white bg-red-600 px-4 py-2 rounded hover:bg-red-700 transition duration-200"
-                        >
-                            {language === 'mr' ? 'रद्द करा' : 'Cancel'}
-                        </button>
-                    </div>
-                </div>
-            )}
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                <BookingForm
+                    product={selectedProduct}
+                    quantity={selectedQuantity}
+                    onClose={() => setIsModalOpen(false)}
+                />
+            </Modal>
         </div>
     );
-}
+};
 
 export default Product;

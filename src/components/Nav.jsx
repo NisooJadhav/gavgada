@@ -8,26 +8,25 @@ const Nav = () => {
   const { language, toggleLanguage } = useLanguage();
 
   return (
-    <nav className="bg-orange-600 p-4 sticky top-0 z-50">
+    <nav className="bg-orange-700 p-4 sticky top-0 z-50">
       <div className="container mx-auto flex justify-between items-center">
         <h1
-          className={`text-2xl font-bold text-white ${
-            language === "mr" ? "font-[gajraj]" : ""
-          }`}
+          className={`text-2xl font-bold text-white ${language === "mr" ? "font-[gajraj]" : ""
+            }`}
         >
           {language === "mr" ? "माणुसकीचा गावगाडा" : "Gavgada"}
         </h1>
         <div className="hidden md:flex items-center space-x-4">
-          <a href="#home" className="text-white hover:text-orange-200">
+          <a href="#home" aria-label="Go to Home Page" className="text-white hover:text-orange-200">
             Home
           </a>
-          <a href="#products" className="text-white hover:text-orange-200">
+          <a href="#products" aria-label="Go to Products section" className="text-white hover:text-orange-200">
             Products
           </a>
-          <a href="#about" className="text-white hover:text-orange-200">
+          <a href="#about" aria-label="Go to About Us section" className="text-white hover:text-orange-200">
             About
           </a>
-          <a href="#contact" className="text-white hover:text-orange-200">
+          <a href="#contact" aria-label="Get Contact Information to contact us" className="text-white hover:text-orange-200">
             Contact
           </a>
           <button
@@ -35,12 +34,16 @@ const Nav = () => {
             onClick={() => {
               toggleLanguage();
             }}
+            aria-label="Translate"
+            title="Translate"
           >
             <Globe size={20} />
           </button>
         </div>
         <div className="md:hidden">
           <button
+            aria-label="Close Button"
+            title="Close Button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="text-white"
           >
@@ -50,16 +53,16 @@ const Nav = () => {
       </div>
       {isMenuOpen && (
         <div className="md:hidden mt-2">
-          <a href="#home" className="block text-white py-2">
+          <a href="#home" aria-label="Go to Home Page" className="block text-white py-2">
             Home
           </a>
-          <a href="#products" className="block text-white py-2">
+          <a href="#products" aria-label="Go to Products section" className="block text-white py-2">
             Products
           </a>
-          <a href="#about" className="block text-white py-2">
+          <a href="#about"  aria-label="Go to About us section" className="block text-white py-2">
             About
           </a>
-          <a href="#contact" className="block text-white py-2">
+          <a href="#contact"  aria-label="Go to Contact us section" className="block text-white py-2">
             Contact
           </a>
           <button
@@ -67,6 +70,8 @@ const Nav = () => {
             onClick={() => {
               toggleLanguage();
             }}
+            title="Translate"
+            aria-label="Translate"
           >
             <Globe size={20} />
           </button>
