@@ -56,7 +56,7 @@ const ProductCard = ({ product, onBook }) => {
                 aria-label="Book Now"
                 title="Book Now"
                 onClick={() => onBook(product, quantity)}
-                className="bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700 transition duration-300 w-full"
+                className="bg-orange-700 text-white py-2 px-4 rounded hover:bg-orange-800 transition duration-300 w-full"
             >
                 Book Now
             </button>
@@ -141,7 +141,7 @@ const BookingForm = ({ product, quantity, onClose }) => {
                 aria-label="Confirm Order"
                 title="Confirm Order"
                 type="submit"
-                className="bg-orange-600 text-white py-2 px-6 rounded hover:bg-orange-700 transition duration-300 w-full"
+                className="bg-orange-700 text-white py-2 px-6 rounded hover:bg-orange-800 transition duration-300 w-full"
             >
                 Confirm Order
             </button>

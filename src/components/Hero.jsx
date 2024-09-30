@@ -32,7 +32,7 @@ const Hero = () => {
                 </p>
                 <a
                     href="#products"
-                    className={`${language === "mr" ? "font-[yatra]" : ""} bg-orange-600 text-white py-2 px-6 rounded-full hover:bg-orange-700 transition duration-300`}
+                    className={`${language === "mr" ? "font-[yatra]" : ""} bg-orange-700 text-white py-2 px-6 rounded-full hover:bg-orange-800 transition duration-300`}
                 >
                     {language === "mr" ? "आता खरेदी करा" : "Shop Now"}
                 </a>

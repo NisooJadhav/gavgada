@@ -19,22 +19,22 @@ const Footer = () => {
                         <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="#home" className="hover:text-orange-200">
+                                <a href="#home" aria-label='See Main Content' title="See Main Content" className="hover:text-orange-200">
                                     Home
                                 </a>
                             </li>
                             <li>
-                                <a href="#products" className="hover:text-orange-200">
+                                <a href="#products" aria-label='See Products' title="See Products" className="hover:text-orange-200">
                                     Products
                                 </a>
                             </li>
                             <li>
-                                <a href="#about" className="hover:text-orange-200">
+                                <a href="#about" aria-label='See About Us' title="See About Us" className="hover:text-orange-200">
                                     About
                                 </a>
                             </li>
                             <li>
-                                <a href="#contact" className="hover:text-orange-200">
+                                <a href="#contact" aria-label='Contact Us' title="Contact Us" className="hover:text-orange-200">
                                     Contact
                                 </a>
                             </li>
@@ -43,13 +43,13 @@ const Footer = () => {
                     <div>
                         <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
                         <div className="flex space-x-4">
-                            <a href="#" className="hover:text-orange-200">
+                            <a href="#" aria-label='Facebook' title='Facebook' className="hover:text-orange-200">
                                 <Facebook size={24} />
                             </a>
-                            <a href="#" className="hover:text-orange-200">
+                            <a href="#" aria-label='Twitter' title='Twitter' className="hover:text-orange-200">
                                 <Twitter size={24} />
                             </a>
-                            <a href="#" className="hover:text-orange-200">
+                            <a href="#" aria-label='Instagram' title='Instagram' className="hover:text-orange-200">
                                 <Instagram size={24} />
                             </a>
                         </div>
